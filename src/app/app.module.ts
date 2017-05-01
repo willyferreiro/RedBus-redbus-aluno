@@ -1,10 +1,11 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from "@angular/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Geolocation } from '@ionic-native/geolocation';
 
-import { FilhoService } from "../domain/Filho/filho-service";
+import { FilhoService } from "../domain/filho/filho-service";
 
 import { MapaPage } from '../pages/mapa/mapa';
 import { FilhosPage } from '../pages/filhos/filhos';
@@ -24,6 +25,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -37,6 +39,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
+    HttpModule,
     Geolocation,
     FilhoService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

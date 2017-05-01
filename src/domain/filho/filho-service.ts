@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
 import { PosicaoGlobal } from "../posicaoglobal/posicaoglobal";
 
-import { Filho } from "./Filho";
+import { Filho } from "./filho";
 
 @Injectable()
 export class FilhoService{
