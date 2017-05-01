@@ -1,14 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Filho } from "../../domain/Filho/Filho";
+import { FilhoService } from "../../domain/Filho/Filho-service";
 
 @Component({
-  selector: 'page-filhos',
-  templateUrl: 'filhos.html'
+    selector: 'page-filhos',
+    templateUrl: 'filhos.html'
 })
 export class FilhosPage {
 
-  constructor(public navCtrl: NavController) {
+    private _Filhos: Filho[] = [];
 
-  }
+    constructor(
+        public navCtrl: NavController,
+        private _FilhoService: FilhoService) {
+
+    }
+
+    ngOnInit(){
+        
+        this._Filhos = this._FilhoService.listaFilhos();
+    }
+
+    get Filhos() {
+        return this._Filhos;
+    }
 
 }

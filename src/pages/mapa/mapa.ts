@@ -28,6 +28,9 @@ export class MapaPage {
         this.geolocation.getCurrentPosition()
             .then((position) => {
 
+                console.log(position.coords.latitude);
+                console.log(position.coords.longitude);
+
                 let latLng = new google.maps.LatLng(
                     position.coords.latitude, position.coords.longitude);
 

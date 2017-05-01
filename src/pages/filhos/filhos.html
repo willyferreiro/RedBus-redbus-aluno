@@ -1,9 +1,21 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Filhos</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Filhos</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  
+    <ion-item-group>
+        <ion-list>
+            <ion-item  *ngFor="let Filho of Filhos">
+                <ion-avatar item-left>
+                    <img src="{{Filho.foto}}">
+                </ion-avatar>
+                <ion-label>{{Filho.nome}}</ion-label>
+                <button ion-button icon-right>
+                    <ion-icon name="pin"></ion-icon>
+                </button>
+            </ion-item>
+        </ion-list>
+    </ion-item-group>
 </ion-content>
