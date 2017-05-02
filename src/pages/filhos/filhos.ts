@@ -9,21 +9,23 @@ import { FilhoService } from "../../domain/filho/filho-service"
 })
 export class FilhosPage implements OnInit {
 
-    private _Filhos: Filho[] = [];
+    private _filhos: Filho[] = [];
 
     constructor(
         public navCtrl: NavController,
         private _FilhoService: FilhoService) {
-
     }
 
     ngOnInit(){
         
-        this._Filhos = this._FilhoService.listaFilhos();
+        this._filhos = this._FilhoService.listaFilhos();
     }
 
-    get Filhos() {
-        return this._Filhos;
+    get filhos() {
+        return this._filhos;
     }
 
+    mostraNoMapa(filho: Filho){
+        
+    }
 }

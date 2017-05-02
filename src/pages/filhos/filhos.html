@@ -7,14 +7,18 @@
 <ion-content padding>
     <ion-item-group>
         <ion-list>
-            <ion-item  *ngFor="let Filho of Filhos">
+            <ion-item  *ngFor="let filho of filhos">
                 <ion-avatar item-left>
-                    <img src="{{Filho.foto}}">
+                    <img src="{{filho.foto}}">
                 </ion-avatar>
-                <ion-label>{{Filho.nome}}</ion-label>
-                <button ion-button icon-right>
-                    <ion-icon name="pin"></ion-icon>
-                </button>
+                <h2>{{filho.nome}}</h2>
+                <h4 [class.naoViagem]="!filho.emViagem">
+                    Em Viagem - {{filho.embarcado ? "Embarcado" : "Não Embarcado"}}
+                    <button color="light" (click)="mostraNoMapa(filho)"
+                        clear ion-button icon-only item-right>
+                        <ion-icon style.color="gray" name="pin"></ion-icon>
+                    </button>
+                </h4>
             </ion-item>
         </ion-list>
     </ion-item-group>
