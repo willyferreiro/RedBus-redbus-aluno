@@ -9,7 +9,7 @@
         <ion-list>
             <ion-item  *ngFor="let filho of filhos">
                 <ion-avatar item-left>
-                    <img src="{{filho.foto}}">
+                    <ion-img src="{{filho.foto}}"></ion-img>
                 </ion-avatar>
                 <h2>{{filho.nome}}</h2>
                 <h4 [class.naoViagem]="!filho.emViagem">

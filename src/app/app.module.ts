@@ -5,6 +5,9 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Geolocation } from '@ionic-native/geolocation';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+
 import { FilhoService } from "../domain/filho/filho-service";
 
 import { MapaPage } from '../pages/mapa/mapa';

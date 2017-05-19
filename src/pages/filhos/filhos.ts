@@ -18,7 +18,15 @@ export class FilhosPage implements OnInit {
 
     ngOnInit(){
         
-        this._filhos = this._FilhoService.listaFilhos();
+        //** Obter dados responsavel */
+        this._FilhoService.listaFilhos(2)
+            .then((filhos) => {
+                this._filhos = filhos;
+            }),
+            err => {
+                console.log(err);
+                //** Adicionar tratamento de erro 
+            }
     }
 
     get filhos() {
