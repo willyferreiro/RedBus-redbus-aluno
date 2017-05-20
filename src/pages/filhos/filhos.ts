@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { Filho } from "../../domain/filho/filho";
 import { FilhoService } from "../../domain/filho/filho-service"
 
@@ -7,26 +7,63 @@ import { FilhoService } from "../../domain/filho/filho-service"
     selector: 'page-filhos',
     templateUrl: 'filhos.html'
 })
-export class FilhosPage implements OnInit {
+export class FilhosPage {
 
     private _filhos: Filho[] = [];
 
     constructor(
         public navCtrl: NavController,
+        private _loadingCtrl: LoadingController,
         private _FilhoService: FilhoService) {
     }
 
-    ngOnInit(){
+    ngOnInit() {
+        this._buscaFilhos();
+    }
+
+    ionViewWillEnter(){
+        this._buscaFilhos();
+    }
+
+    doRefresh(refresher) {
         
-        //** Obter dados responsavel */
-        this._FilhoService.listaFilhos(2)
+        this._buscaFilhosServico()
+        .then((filhos) => {
+                this._filhos = filhos;
+                refresher.complete();
+            }),
+            err => {
+                console.log(err);
+                refresher.cancel();
+                //** Adicionar tratamento de erro 
+            }
+    }
+
+    private _buscaFilhos() {
+        
+        let loader = this._loadingCtrl.create({
+            content: 'Carregando filhos. Aguarde...'
+        });
+
+        loader.present();
+
+        this._buscaFilhosServico()
             .then((filhos) => {
                 this._filhos = filhos;
+                loader.dismiss();
             }),
             err => {
                 console.log(err);
                 //** Adicionar tratamento de erro 
+                loader.dismiss();
             }
+    }
+
+    private _buscaFilhosServico() {
+        
+        //** Obter dados responsavel */
+        return this._FilhoService.listaFilhos(2)
+            .then((filhos) => filhos)
     }
 
     get filhos() {
@@ -35,5 +72,7 @@ export class FilhosPage implements OnInit {
 
     mostraNoMapa(filho: Filho){
         
+        this._FilhoService.FilhoSelecionado = filho;
+        this.navCtrl.parent.select(0);
     }
 }

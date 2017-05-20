@@ -1,9 +1,9 @@
-export class Responsavel{
+import { Usuario } from "../usuario/usuario";
+
+export class Responsavel {
 
     constructor (
-        public idResposanvel: number,
-        public telefone: number,
-        public senha: string,
-        public nome: string
+        public Usuario: Usuario,
+        public idUsuario: number
     ){}
 }

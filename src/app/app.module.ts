@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { FilhoService } from "../domain/filho/filho-service";
+import { MotoristaService } from "../domain/Motorista/motorista-service";
 
 import { MapaPage } from '../pages/mapa/mapa';
 import { FilhosPage } from '../pages/filhos/filhos';
@@ -45,6 +46,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HttpModule,
     Geolocation,
     FilhoService,
+    MotoristaService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

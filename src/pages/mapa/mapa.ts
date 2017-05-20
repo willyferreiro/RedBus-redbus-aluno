@@ -1,6 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { FilhoService } from "../../domain/filho/filho-service";
+import { Filho } from "../../domain/filho/filho";
+import { Motorista } from "../../domain/Motorista/motorista";
+import { MotoristaService } from "../../domain/Motorista/motorista-service";
 
 declare var google;
 
@@ -13,55 +17,94 @@ export class MapaPage {
     @ViewChild('map') mapElement: ElementRef;
     map: any;
 
+    private _motoristaFilho: Motorista;
+
     constructor(
         public navCtrl: NavController,
-        public geolocation: Geolocation) {
-
+        public geolocation: Geolocation,
+        private _filhoService: FilhoService,
+        private _motoristaService: MotoristaService ) {
     }
-
+    
     ionViewDidLoad() {
-        this.loadMap();
+        this._carregaMapa();
     }
 
-    loadMap() {
+    ionViewWillEnter(){
+        this._carregaMapa();
+    }
 
-        this.geolocation.getCurrentPosition()
+    private _carregaMapa(){
+
+        let latLng: number;
+
+        if (this._filhoService.FilhoSelecionado != null){
+                    
+            this._getMotoristaFilho(this._filhoService.FilhoSelecionado)
+            .then((motorista) => {
+                this._motoristaFilho = motorista;
+                
+                latLng = new google.maps.LatLng(
+                    this._motoristaFilho.posicao_latitude,
+                    this._motoristaFilho.posicao_longitude);   
+
+                this._loadMap(latLng);
+
+                this.addMarker(this._motoristaFilho);
+
+            }), (err) => {
+                /**Tratamento erro */
+                console.log(err);
+            };
+
+        } else {
+            this.geolocation.getCurrentPosition()
             .then((position) => {
 
-                console.log(position.coords.latitude);
-                console.log(position.coords.longitude);
-
-                let latLng = new google.maps.LatLng(
+                latLng = new google.maps.LatLng(
                     position.coords.latitude, position.coords.longitude);
 
-                let mapOptions = {
-                    center: latLng,
-                    zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
+                this._loadMap(latLng);
 
-                this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-            }, (err) => {
+            }), (err) => {
+                /**Tratamento erro */
                 console.log(err);
-            });
+            };
+        }
     }
 
-    addMarker() {
+   private _loadMap(latLng: number) {
+        
+        let mapOptions = {
+            center: latLng,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    }
+
+    private _getMotoristaFilho(filho: Filho){
+
+        return this._motoristaService.getMotorista(filho.idMotorista)
+            .then((motorista) => motorista)
+    }
+
+    addMarker(motorista: Motorista) {
 
         let marker = new google.maps.Marker({
             map: this.map,
             animation: google.maps.Animation.DROP,
-            position: this.map.getCenter()
+            position: new google.maps.LatLng(
+                motorista.posicao_latitude, 
+                motorista.posicao_longitude)
         });
 
         let content = "<h4>Posição Filho</h4>";
-
-        this.addInfoWindow(marker, content);
-
+        this._addInfoWindow(marker, content);
     }
 
-    addInfoWindow(marker, content) {
+    private _addInfoWindow(marker, content) {
 
         let infoWindow = new google.maps.InfoWindow({
             content: content
@@ -70,7 +113,5 @@ export class MapaPage {
         //google.maps.event.addListener(marker, 'click', () => {
             infoWindow.open(this.map, marker);
         //});
-
     }
-
 }
