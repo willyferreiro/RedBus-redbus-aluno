@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 
 import { Parametros } from "../util/parametros";
-import { Motorista } from "./motorista";
 
 @Injectable()
 export class MotoristaService{
