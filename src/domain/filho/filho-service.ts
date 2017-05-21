@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
-import { PosicaoGlobal } from "../posicaoglobal/posicaoglobal";
 
 import { Filho } from "./filho";
 import { Parametros } from "../util/parametros";

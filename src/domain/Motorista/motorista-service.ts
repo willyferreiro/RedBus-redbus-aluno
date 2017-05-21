@@ -7,8 +7,6 @@ import { Motorista } from "./motorista";
 @Injectable()
 export class MotoristaService{
 
-    private _motorista: Motorista;
-
     constructor(private _http: Http){    
     }
 

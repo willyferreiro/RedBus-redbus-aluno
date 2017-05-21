@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Filho } from "../../domain/filho/filho";
 import { FilhoService } from "../../domain/filho/filho-service"
